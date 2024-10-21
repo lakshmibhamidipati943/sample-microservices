@@ -1,0 +1,47 @@
+server:
+ port: 9191
+
+spring:
+ application:
+  name: API-GATEWAY
+ cloud:
+  config:
+   enabled: true
+   uri: http://localhost:9296
+  gateway:
+   routes:
+    - id: USERS-SERVICE
+      uri: lb://USERS-SERVICE
+      predicates:
+       - Path=/users/**
+      filters:
+       - name: CircuitBreaker
+         args:
+          name: USER-SERVICE
+          fallbackuri: forward:/usersServiceFallBack
+       - CircuitBreaker=default
+    - id: DEPARTMENT-SERVICE
+      uri: lb://DEPARTMENT-SERVICE
+      predicates:
+       - Path=/departments/**
+      filters:
+       - name: CircuitBreaker
+         args:
+          name: DEPARTMENT-SERVICE
+          fallbackuri: forward:/departmentServiceFallBack
+       - CircuitBreaker=default
+
+
+#resilience4j:
+# circuitbreaker:
+#  instances:
+#   apiService:
+#    registerHealthIndicator: true
+#    slidingWindowSize: 10
+#    failureRateThreshold: 50
+#    waitDurationInOpenState: 10000
+#    permittedNumberOfCallsInHalfOpenState: 3
+
+
+
+

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resilience4j Dashboard</title>
+</head>
+<body>
+<h1>Resilience4j Dashboard</h1>
+
+<h2>Service Call Result:</h2>
+<p th:text="${result}">Result will be displayed here.</p>
+
+<h2>Circuit Breaker State:</h2>
+<p th:text="${#httpServletRequest.getAttribute('circuitBreakerState')}">State will be displayed here.</p>
+
+<a href="/call-service">Call External Service</a>
+
+<script th:inline="javascript">
+    // Optional: Add JavaScript to refresh state periodically or handle UI updates.
+</script>
+
+</body>
+</html>

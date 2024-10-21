@@ -1,0 +1,26 @@
+management:
+ endpoints:
+  web:
+   exposure:
+    include: "*"
+ endpoint:
+  health:
+   show-details: always
+
+#Resilience4j configuration
+resilience4j:
+ circuitbreaker:
+  instances:
+   myService:
+    registerHealthIndicator: true
+    slidingWindowSize: 10
+    failureRateThreshold: 50
+    waitDurationInOpenState: 10000
+
+spring:
+ main:
+  allow-bean-definition-overriding: true
+
+logging:
+ level:
+  root: DEBUG
